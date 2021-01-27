@@ -1,0 +1,27 @@
+{% extends "_base.html" %}
+
+{% block content %}
+<div class="inner-container">
+  <form action="/{{user.username}}/save" id="profile-editing" method="post" enctype="multipart/form-data">
+  <div class="row no-gutters">
+    <div id="sidebar" class="profile-editing">
+      <label for="file-input" class="avatar-upload">
+        <div id="avatar-sidebar">
+          <img src="{{get_avatar(user.username, 256)}}" alt="set image" title="user:{{user.username}}" class="user-avatar large editing" id="output" style="margin: -3px;">
+        </div>
+      </label>
+      <input id="file-input" name="image" type="file" accept="image/*" onchange="document.getElementById('output').src = window.URL.createObjectURL(this.files[0])">
+      <textarea name="tags" id="tags" class="user-tags-edit">{{tags}}</textarea>
+      <div class="user-profile-view center"><a href="/info/users#tags" target="_blank">tagging guide</a></div>
+    </div>
+    <div id="page-content" class="profile-editing">
+      <textarea name="bio" id="bio" class="user-profile-edit">{{user_options.bio}}</textarea>
+      <div class="user-profile-buttons">
+        <button class="btn btn-lg btn-primary btn-block" type="submit">save</button>
+      </div>
+      <div class="user-profile-view float-left"><a href="/{{user.username}}/settings">account settings</a></div>
+      <div class="user-profile-view float-right"><a href="/{{user.username}}">view profile</a></div>
+    </div>
+  </form>
+</div>
+{% endblock %}

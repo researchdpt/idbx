@@ -1,0 +1,21 @@
+todo:
+    username whitelist for coordinates/certain tags?
+done:
+    profile cards
+    combine tag and user searches for the map
+    blacklisted tags list
+    profile likes/views
+    only show profile views after user has had a certain amount of views
+    change sorting of profile bio/tags
+    don't allow login/register when already logged in/registered
+    make account settings into toggles
+    fix map page height
+    fix location appearing as "," when there's no location set
+    automatic setting of profile ratings depending on the tags the user has set
+    limit tag amount
+    make qrcodes for profiles
+
+ALTER TABLE `user_opts` ADD `views` INT NOT NULL DEFAULT '0' AFTER `bio`, ADD `avatar` INT NOT NULL DEFAULT '0' AFTER `views`, ADD `map` INT NOT NULL DEFAULT '0' AFTER `avatar`, ADD `tracking` INT NOT NULL DEFAULT '0' AFTER `map`, ADD `rank` INT NOT NULL DEFAULT '0' AFTER `tracking`;
+ALTER TABLE `user_opts` ADD `adult` INT NOT NULL DEFAULT '0' AFTER `rank`; 
+ALTER TABLE `user_opts` ADD `sharing` INT NOT NULL DEFAULT '0' AFTER `tracking`; 
+ALTER TABLE `user_opts` DROP `options`;

@@ -1,0 +1,35 @@
+export FLASK_APP=identibooru
+
+### Site Configuration: ###
+# Main
+export identibooru_Branding="identibooru"
+export identibooru_Email="identiboorustaff@yandex.com"
+export identibooru_Secret="b9h4h43c01403bbe0d6c1daC8deg08D453321048576brr8771"
+export FLASK_DEBUG=false
+
+# Host
+export identibooru_Host="0.0.0.0"
+export identibooru_Port="5000"
+
+# hCaptcha
+export identibooru_hCaptcha_Enabled=true
+export identibooru_hCaptcha_Sitekey="525abf4f-ab4e-44d9-8771-b93c01403bbe"
+export identibooru_hCaptcha_Secret="0x0d6c1daC8de8D45332Ec51826F259E08AdAFdeEE"
+
+# Uploads
+export identibooru_Image_MaxWidth="1024"
+export identibooru_Image_MaxHeight="2048"
+
+export identibooru_Thumb_MaxWidth="256"
+export identibooru_Thumb_MaxHeight="1024"
+
+export identibooru_Image_FileSize="1048576" # 1MB - image file limit, in bytes
+
+# Miscellaneous
+export identibooru_Disable_Search=true
+export identibooru_Disable_Registration=false
+export identibooru_Software="<a href='/info.txt'>identibooru</a>"
+export identibooru_Version="0.4b"
+
+### Database Configuration: ###
+export identibooru_DB="mysql://identibooru:identibooru@localhost/identibooru"

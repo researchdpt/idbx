@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		{% block head %}
+		<title>{{ title }} - {{get_branding()}}</title>
+		<link href="/static/css/bootstrap.min.css" rel="stylesheet">
+        <link href="/static/css/style.css" rel="stylesheet">
+        <link href="/static/css/front.css" rel="stylesheet">
+		{% endblock %}
+	</head>
+	<body>
+        <div id="static-index">
+            <div id="logo"><a href="/">{{get_branding()}}</a></div>
+
+            <div id="navigation">
+                <span class="nav-left">
+                    <a href="/search/?t=rating:safe" class="bold" class="nav-left">users</a> / <a href="/search/?t=*" class="bold" class="nav-left">all (18+)</a>
+                </span>
+                <span class="nav-right">
+                    {% if not current_user.is_anonymous() %}
+                    <strong>{{current_user.get_username()}}</strong> / <a href="/{{current_user.get_username()}}">profile</a> / <a href="/{{current_user.get_username()}}/edit">edit</a> / <a href="{{url_for('function_logout')}}">log out</a>
+                    {% else %}
+                        <a href="{{url_for('account_register')}}">register</a> / <a href="{{url_for('account_login')}}">log in</a>
+                    {% endif %}
+                </span>
+            </div>
+            
+            <form class="form-search"  id="searchform" action="/search" method="get">
+                <input id="search-bar" name="t" type="text" value="" placeholder="ex: age:25 programming python -java" />
+                <button class="btn btn-lg btn-primary btn-block" type="submit">search</button>
+            </form>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="alert alert-{{ messages.0.0 }}" role="alert">
+                {% for category, message in messages %}
+                    {{ message|safe }} </br>
+                {% endfor %}
+                </div>
+            {% endif %}
+            {% endwith %}
+
+            <span class="links">
+                <a href="/info/terms" target="_blank">terms of service</a>
+                <!--{% if not is_search_disabled() %}
+                 - Serving {{get_stats()['users']}} profiles and {{get_stats()['tags']}} tags
+                {% else %}
+                 - [statistics are disabled]
+                {% endif %}-->
+                <br/>
+                [running {{get_stats()['software']|safe}} {{get_stats()['version']|safe}}]
+            </span>
+        </div>
+	</body>
+</html>

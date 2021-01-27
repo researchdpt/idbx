@@ -1,0 +1,113 @@
+{% extends "_base.html" %}
+
+{% block head %}
+        <meta name="twitter:card" content="{{get_branding()}} Profile" />
+        <meta name="twitter:site" content="user:{{user.username}}" />
+        <meta name="twitter:creator" content="IDB" />
+  
+        <meta property="og:url" content="{{get_request().base_url}}" />
+        <meta property="og:title" content="user:{{user.username}}" />
+        <meta property="og:description" content="{{user_options.bio_summary}}" />
+        {% if get_avatar(user.username, 1024) != "" %}
+        <meta property="og:image" content="{{get_request().url_root}}{{get_avatar(user.username, 1024)}}" />
+        {% endif %}
+
+        {% if get_user_options(user.username)['map_sidebar'] == 1 %}
+        <link rel="stylesheet" href="//d19vzq90twjlae.cloudfront.net/leaflet/v0.7.7/leaflet.css" />
+        <script src="//d19vzq90twjlae.cloudfront.net/leaflet/v0.7.7/leaflet.js"></script>
+        {% endif %}
+{% endblock %}
+
+{% block content %}
+{{render_search_bar()|safe}}
+<div class="inner-container">
+  <div id="profile-title">
+    <h1 id="profile-username">{{user.username}}</h1>
+  </div>
+  <div class="row no-gutters">
+    <div id="sidebar">
+      {% if user_options.avatar_sidebar %}
+      <div id="avatar-sidebar">
+        <a href="{{get_avatar(user.username, 1024)}}" target="_blank">
+          <img src="{{get_avatar(user.username, 1024)}}" alt="user:{{user.username}}" title="user:{{user.username}}" class="user-avatar large" style="margin: -3px;">
+        </a>
+      </div>
+      {% endif %}
+      <ul id="tag-sidebar" class="profile-sidebar">
+        {{tag_list|safe}}
+      </ul>
+      <ul id="tag-sidebar" class="profile-sidebar-options">
+          <li><h6>info</h6></li>
+          {% if get_user_options(user.username)['views'] >= 1000 %}
+          <li class="view_count">{{get_user_options(user.username)['views']}} views</li>
+          {% endif %}
+          <li><a href="/{{user.username}}/source" target="_blank">source</a></li>
+          {% if get_user_options(user.username)['tracking'] == 1 %}
+          <li><a href="/map?t=user:{{user.username}}">view on map</a></li>
+          {% endif %}
+          {% if (get_user_options(user.username)['tracking'] == 1 and get_user_options(user.username)['map_sidebar'] == 1) %}
+          <li id="map"></li>
+          {% endif %}
+          {% if get_user_options(user.username)['sharing'] == 1 %}
+          {% if get_qr(user.username) != "" %}
+          <li><img src="{{get_qr(user.username)}}" alt="user:{{user.username}}" title="user:{{user.username}}" class="user-qr large"></li>
+          {% endif %}
+          {% endif %}
+    </ul>
+    </div>
+    <div id="page-content" class="profile-content">
+      <h1 id="profile-username">{{user.username}}</h1>
+      <p id="profile-bio">{{user_options.bio_parsed|safe}}</p>
+    </div>
+    <div id="profile-extras">
+      <h6>info</h6>
+      <ul id="tag-sidebar">
+      {% if get_user_options(user.username)['views'] >= 1000 %}
+      <li class="view_count">{{get_user_options(user.username)['views']}} views</li>
+      {% endif %}
+      <li><a href="/{{user.username}}/source" target="_blank">source</a></li>
+      {% if get_user_options(user.username)['tracking'] == 1 %}
+      <li><a href="/map?t=user:{{user.username}}">view on map</a></li>
+      {% endif %}
+      </ul>
+      {% if get_user_options(user.username)['map_sidebar'] == 1 %}
+      <div id="map2"></div>
+      {% endif %}
+      {% if get_user_options(user.username)['sharing'] == 1 %}
+      {% if get_qr(user.username) != "" %}
+      <p><img src="{{get_qr(user.username)}}" alt="user:{{user.username}}" title="user:{{user.username}}" class="user-qr large"></p>
+      {% endif %}
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% if get_user_options(user.username)['map_sidebar'] == 1 %}
+<script type="text/javascript">
+  var map = L.map('map')
+  map.setView([10, -12], 2);
+  {% if get_user_options(user.username)['tracking'] == 1 %}
+    {% if get_user_options(user.username)['lat'] and get_user_options(user.username)['tracking'] %}
+          map.setView([{{get_user_options(user.username)['lat']}}, {{get_user_options(user.username)['lon']}}], 3);
+          L.marker([{{get_user_options(user.username)['lat']}}, {{get_user_options(user.username)['lon']}}]).addTo(map)
+          .bindPopup("<a href=\"{{user.username}}\"><strong>{{user.username}}</strong><div id=\"avatar-map\"><img src=\"{{get_avatar(user.username, 256)}}\" alt=\"user:{{user.username}}\" title=\"user:{{user.username}}\" class=\"user-avatar small\" style=\"margin: -3px;\"></div></a>")
+    {% endif %}
+  {% endif %}
+  var layer = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+  attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'});
+  map.addLayer(layer);
+
+  var map2 = L.map('map2')
+  map2.setView([10, -12], 2);
+  {% if get_user_options(user.username)['tracking'] == 1 %}
+    {% if get_user_options(user.username)['lat'] and get_user_options(user.username)['tracking'] %}
+          map2.setView([{{get_user_options(user.username)['lat']}}, {{get_user_options(user.username)['lon']}}], 3);
+          L.marker([{{get_user_options(user.username)['lat']}}, {{get_user_options(user.username)['lon']}}]).addTo(map2)
+          .bindPopup("<a href=\"{{user.username}}\"><strong>{{user.username}}</strong><div id=\"avatar-map\"><img src=\"{{get_avatar(user.username, 256)}}\" alt=\"user:{{user.username}}\" title=\"user:{{user.username}}\" class=\"user-avatar small\" style=\"margin: -3px;\"></div></a>")
+    {% endif %}
+  {% endif %}
+  var layer = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
+  attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'});
+  map2.addLayer(layer);
+</script>
+{% endif %}
+{% endblock %}

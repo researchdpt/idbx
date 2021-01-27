@@ -1,0 +1,26 @@
+{% extends "_base.html" %}
+
+{% block content %}
+<div class="inner-container info">
+  <h1 id="info">What is IDB?</h1>
+  <p>IDB (identibooru) is a custom Danbooru-style imageboard for user profiles rather than images.<br/>
+  It allows users to describe themselves in detail and to easily find eachother per interest/type.</p>
+  <p>Users can tag themselves with (currently) up to 2000 custom tags and publicize an accurate or approximate<br/>
+  location of themselves on the searchable tag map.</p>
+  <p>All users are tagged by one of the three safety ratings (<a href="/search/?t=rating:safe" class="tag">rating:safe</a>, <a href="/search/?t=rating:questionable" class="tag">rating:questionable</a>, or <a href="/search/?t=rating:explicit" class="tag">rating:explicit</a>),<br/>
+  which describe the tags and type of content their profile will likely contain.</p>
+
+  <p><strong>Read more:</strong> <a href="/info/users">User Accounts</a></p>
+
+  <p>Currently, guests can only search for <a href="/search/?t=rating:safe" class="tag">rating:safe</a> profiles.</p>
+
+  <p class="bold">Please contact <a href="mailto://{{get_contact()}}">{{get_contact()}}</a> upon experiencing any problems with the website.</p>
+
+  <h4 id="extra">See also:</h4>
+  <ul>
+    <li><a href="/info/terms">Terms of Service</a></li>
+    <li><a href="/info/privacy">Privacy Policy</a></li>
+    <li><a href="/info/uploads">Upload Rules</a></li>
+  </ul>
+</div>
+{% endblock %}

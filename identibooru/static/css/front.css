@@ -1,0 +1,45 @@
+html, body{
+    height: 100vh;
+}
+
+#static-index{
+    text-align: center;
+    max-width: 500px;
+    margin: 0 auto;
+    margin-top: 4%;
+    padding-left: 16px;
+    padding-right: 16px;
+}
+
+#static-index #logo{
+    font-size: 54px;
+    margin-bottom: -15px;
+}
+
+nav.secondary{
+    margin-bottom: -20px;
+}
+
+#static-index #search-bar{
+    margin-top: 12px;
+}
+
+#static-index .links{
+    font-family: tahoma;
+    font-size: 11px;
+    color: #5a5a5a;
+}
+
+#static-index .alert{
+    margin-top: 16px;
+}
+
+.bg-light{
+    background-color: #fff !important;
+}
+
+@media only screen and (max-width: 690px) {
+    #static-index .alert{
+        margin-top: 16px;
+    }
+}

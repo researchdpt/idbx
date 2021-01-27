@@ -1,0 +1,46 @@
+{% extends "_base.html" %}
+
+{% block content %}
+<div class="inner-container info">
+    <h1 id="account">Account Settings</h2>
+    <strong>Public location:</strong>
+    <ul>
+        <li>Users will be able to view your <a href="/search/?t=lat:*" class="tag">lat:*</a> <a href="/search/?t=lon:*" class="tag">lon:*</a> coordinates on your profile, and your location on the user map.</li>
+        <li>You can use your browser or an app to automatically update your current position.</li>
+        <li>You can set your coordinates via API.</li>
+    </ul>
+    <strong>Adult content:</strong>
+    <ul>
+        <li>Allows you to search for users under the <a href="/search/?t=rating:questionable" class="tag">rating:questionable</a> and <a href="/search/?t=rating:explicit" class="tag">rating:explicit</a> tags.</li>
+    </ul>
+
+    <h1 id="profile">Profile</h2>
+    <strong id="html">HTML:</strong>
+    <p>Users can use a limited form of HTML to write and customize their profiles.</p>
+
+    <strong id="tags">Tags</strong>
+    <p>By tagging themselves, users are able to search for one another featuring a specific type. It is recommended to be as detailed and specialized as possible when tagging.</p>
+    <strong>Information:</strong>
+    <ul>
+        <li>Spaces are replaced with underscores.</li>
+        <li>Commas (,) and asterisks (*) are not allowed in tags.</li>
+        <li>The tilde (~) and minus sign (-) can not be used as the first character of a tag, but can appear after that.</li>
+        <li>Underscores (_) cannot be the first or last character of a tag.</li>
+    </ul>
+    <strong id="tag-types">Tag types:</strong>
+    <ul>
+        <li>Prefixed tags (tags containing a colon) appear under the "Bio" list.<br/>
+            <strong>example:</strong> <a href="/search/?t=age:32" class="tag">age:32</a> <a href="/search/?t=location:united_states" class="tag">location:united_states</a></li>
+        <li>General tags are not prefixed and appear under the "Tags" list.<br/>
+            <strong>example:</strong> <a href="/search/?t=developer" class="tag">developer</a> <a href="/search/?t=programmer" class="tag">programmer</a> <a href="/search/?t=java" class="tag">java</a> </li>
+        <li>Coordinate tags (starting with lat: and lon:) are a prefix tag which allows users to set their coordinates for the user map and appear under the "Coordinates" list.<br/>
+            <strong>example:</strong> <a href="/search/?t=lat:55.3781" class="tag">lat:55.3781</a> <a href="/search/?t=lon:3.4360" class="tag">lon:3.4360</a></li>
+    </ul>
+    <strong id="safety-rating">Profile safety ratings:</strong>
+    <ul>
+        <li><a href="/search/?t=rating:explicit" class="tag">rating:explicit</a> - For profiles and/or profile images of containing explicit adult content.</li>
+        <li><a href="/search/?t=rating:questionable" class="tag">rating:questionable</a> - For profiles and/or profile images that are suggestive and/or contain questionable content.</li>
+        <li><a href="/search/?t=rating:safe" class="tag">rating:safe</a> - For everything else.</li>
+    </ul>
+</div>
+{% endblock %}

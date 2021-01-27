@@ -1,0 +1,33 @@
+{% extends "_base.html" %}
+
+{% block content %}
+<div class="inner-container info">
+<h1 id="tos">Upload Rules</h1>
+  <p>Last updated: July 15, 2020</p>
+  <h2>Prohibited Content</h2>
+  <p>You may not upload any of the following to {{get_branding()}}:</p>
+  <ul>
+    <li>Commercially licensed imagery.</li>
+    <li>Real photos of any person under the age of 18.</li>
+    <li>Works containing third-party watermarks.</li>
+    <li>Extreme violence or gore.</li>
+  </ul>
+  
+  <h2>Unsafe Content</h2>
+  <p>Profiles containing any content which matches the criteria below <strong>must</strong> be tagged as <a href="/search/?t=rating:explicit" class="tag">rating:explicit</a> or <a href="/search/?t=rating:questionable" class="tag">rating:questionable</a>.
+    <ul>
+      <li>Pornography.</li>
+      <li>Nudity.</li>
+      <li>Suggestive imagery.</li>
+      <li>Drugs, drug use, drug paraphernalia.</li>
+      <li>Violence.</li>
+    </ul>
+
+  <h4>See also</h4>
+  <ul>
+    <li><a href="/info/terms">Terms of Service</a></li>
+    <li><a href="/info/privacy">Privacy Policy</a></li>
+  </ul>
+      
+</div>
+{% endblock %}

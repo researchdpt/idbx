@@ -1,0 +1,14 @@
+flask
+requests
+humanize
+Pillow
+piexif
+flask-sqlalchemy
+flask-caching
+flask-login
+flask_hcaptcha
+mysqlclient
+numpy
+html_sanitizer
+redis
+qrcode[pil]

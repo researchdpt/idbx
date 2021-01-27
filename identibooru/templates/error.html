@@ -1,0 +1,8 @@
+{% extends "_base.html" %}
+
+{% block content %}
+<div class="inner-container">
+    {{render_search_bar()|safe}}
+    <div id="error-notice">{{error|safe}}</div>
+</div>
+{% endblock %}

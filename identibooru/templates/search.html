@@ -1,0 +1,26 @@
+{% extends "_base.html" %}
+
+{% block content %}
+<div class="inner-container">
+  {{render_search_bar(keywords)|safe}}
+  <div class="row no-gutters">
+    <div id="sidebar">
+      <ul id="tag-sidebar">
+        {{tags|safe}}
+      </ul>
+    </div>
+    <div id="page-content">
+        {% if results %}
+        <p class="float-right view-map">[<a href="/map?t={{keywords}}" target="_blank" class="view-map">map</a>]&nbsp;</p>
+          {% for result in results.values() %}
+            <div class="user-item">
+              <a href="/{{result['user'].username}}">
+                <img src="{{get_avatar(result['user'].username, 256)}}" alt="[user:{{result['user'].username}}]" title="user:{{result['user'].username}}" class="user-avatar small" style="margin: -3px;">
+              </a>
+            </div>
+          {% endfor %}
+        {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

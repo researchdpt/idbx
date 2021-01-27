@@ -1,0 +1,40 @@
+{% extends "_base.html" %}
+{% block content %}
+<div class="inner-container">
+    <form class="form-register"  id="registerform" action="/function/register" method="post">
+        <h1 class="h3 mb-3 font-weight-normal">register</h1>
+        
+        <label for="inputUsername" class="sr-only">username</label>
+        <input type="text" id="inputUsername" class="form-control" name="username" placeholder="username" required autofocus>
+
+        <label for="inputEmail" class="inputEmail sr-only">e-mail</label>
+        <input type="text" id="inputEmail" class="form-control" name="email" placeholder="email">
+
+        <label for="inputPassword" class="sr-only">password</label>
+        <input type="password" id="inputPassword" class="form-control" name="password" placeholder="password" required>
+
+
+        <span class="float-right">
+          <strong>by registering, you agree to the following:</strong>
+          <ul>
+            <li><a href="/info/terms" target="_blank">terms of service</a></li>
+            <li><a href="/info/privacy" target="_blank">privacy policy</a></li>
+            <li><a href="/info/uploads" target="_blank">upload rules</a></li>
+          </ul>
+        </span>
+
+        {% if hcaptcha %}
+          <label for="inputCaptcha" class="sr-only">captcha</label>
+          <div class="site-captcha">
+            {{ hcaptcha }}
+            <a href="https://www.hcaptcha.com/privacy" target="_blank"><img src="/static/img/hcaptcha-logo-small.png" alt="hCaptcha" title="powered by hCaptcha"/></a>
+            <span>JavaScript is required for hCaptcha</span>
+          </div>
+        {% endif %}
+  
+        <input type="email" id="inputEmail" class="form-control register-email" name="email" placeholder="email">
+
+        <button class="btn btn-lg btn-primary btn-block" type="submit">register</button>
+      </form>
+</div>
+{% endblock %}

@@ -1,0 +1,90 @@
+{% extends "_base.html" %}
+{% block content %}
+<div class="inner-container">
+    <form class="form-settings account_settings"  id="settingsform" action="/function/change-options" method="post">
+        <h1 class="h3 mb-3 font-weight-normal">account settings</h1>
+
+        <label for="inputAccount" class="sr-only">account settings</label>
+
+        <div class="btn-group-toggle profile" data-toggle="buttons">
+            <label class="btn btn-secondary active">
+                <input type="checkbox" id="toggleTracking" name="options" value="toggleTracking" {{user_is_checked(user.username,"toggleTracking")}} data-toggle="toggle" autocomplete="off"> public location
+            </label>
+            <label class="btn btn-secondary active">
+                <input type="checkbox" id="toggleAdult" name="options" value="toggleAdult" {{user_is_checked(user.username,"toggleAdult")}} data-toggle="toggle" autocomplete="off">display nsfw content (18+)
+            </label>
+            <label class="btn btn-secondary active">
+                <input type="checkbox" id="toggleMap" name="options" value="toggleMap" {{user_is_checked(user.username,"toggleMap")}} data-toggle="toggle" autocomplete="off">map on sidebar
+            </label>
+            <label class="btn btn-secondary active">
+                <input type="checkbox" id="toggleAvatar" name="options" value="toggleAvatar" {{user_is_checked(user.username,"toggleAvatar")}} data-toggle="toggle" autocomplete="off">avatar on sidebar
+            </label>
+            <label class="btn btn-secondary active">
+                <input type="checkbox" id="toggleSharing" name="options" value="toggleSharing" {{user_is_checked(user.username,"toggleSharing")}} data-toggle="toggle" autocomplete="off"> sharing options on sidebar
+            </label>
+        </div>
+
+        <input type="hidden" id="inputUsername" class="form-control" name="username" placeholder="username" value="{{user.username}}">
+
+        <button class="btn btn-lg btn-primary btn-block" type="submit">save</button>
+    </form>
+    <form class="form-password account_settings"  id="passwordform" action="/function/change-password" method="post">
+        <h1 class="h3 mb-3 font-weight-normal">change password</h1>
+
+        <label for="inputPassword" class="sr-only">new password</label>
+        <input type="hidden" id="inputUsername" class="form-control" name="username" placeholder="username" value="{{user.username}}">
+        <input type="password" id="inputPassword" class="form-control" name="password" placeholder="password" required>
+
+        <button class="btn btn-lg btn-primary btn-block" type="submit">change password</button>
+    </form>
+    <form class="form-api account_settings"  id="apiform" action="/{{user.username}}/set" method="get">
+        <h1 class="h3 mb-3 font-weight-normal">location</h1>
+        <input type="text" id="inputCoords" class="form-control" name="coords" placeholder="{{get_user_options(user.username)['lat']}},{{get_user_options(user.username)['lon']}}" value="">
+        <button class="btn btn-lg btn-primary btn-block" onClick="geoFindMe(); return false;">get my current location</button>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">update location</button>
+    
+        <br/><br/>
+
+        <h1 class="h3 mb-3 font-weight-normal">api</h1>
+        <input type="text" id="inputAPI" class="form-control" value="{{get_user_options(user.username)['api']}}">
+        <p>usage:</p>
+        <ul>
+            <li><strong>set coordinates:</strong> <code>/&lt;username&gt;/set?coords=&lt;lat&gt;,&lt;lon&gt;&api=&lt;api&gt;</li></code>
+        </ul>
+        <p class="dim italic"><span class="bold">note:</span> the key will change if you change your password</p>
+ 
+        {% if get_qr(user.username) != "" %}
+        <br/><br/>
+
+        <h1 class="h3 mb-3 font-weight-normal">sharing</h1>
+        <p><img src="{{get_qr(user.username)}}" alt="user:{{user.username}}" title="user:{{user.username}}" class="user-qr large" style="margin: -3px;"></p>
+
+        {% endif %}
+    </form>
+    <div class="user-profile-view float-right"><a href="/{{user.username}}/edit">profile settings</a></div>
+</div>
+
+<script>
+function geoFindMe() {
+    const input = document.querySelector('#inputCoords');
+
+    function success(position) {
+        const latitude  = position.coords.latitude;
+        const longitude = position.coords.longitude;
+        input.value = `${latitude},${longitude}`;
+    }
+
+    function error() {
+        input.placeholder = 'unable to retrieve your location';
+        return
+    }
+
+    if(!navigator.geolocation) {
+        status.placeholder = 'geolocation is not supported by your browser';
+    } else {
+        status.placeholder = 'locating...';
+        navigator.geolocation.getCurrentPosition(success, error);
+    }
+}
+</script>
+{% endblock %}

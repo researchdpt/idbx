@@ -1,0 +1,20 @@
+{% extends "_base.html" %}
+{% block content %}
+<div class="inner-container">
+    <form class="form-signin"  id="loginform" action="/function/login" method="post">
+        <h1 class="h3 mb-3 font-weight-normal">log in</h1>
+
+        <label for="inputUsername" class="sr-only">username</label>
+        <input type="text" id="inputUsername" class="form-control" name="username" placeholder="username" required autofocus>
+
+        <label for="inputEmail" class="inputEmail sr-only">e-mail</label>
+        <input type="text" id="inputEmail" class="form-control" name="email" placeholder="email">
+
+        <label for="inputPassword" class="sr-only">password</label>
+        <input type="password" id="inputPassword" class="form-control" name="password" placeholder="password" required>
+
+        <button class="btn btn-lg btn-primary btn-block" type="submit">log in</button>
+
+      </form>
+</div>
+{% endblock %}

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		{% block head %}
+        <title>{{ title }} - {{get_branding()}}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+		<link href="{{get_filemtime('/css/bootstrap.min.css')}}" rel="stylesheet">
+        <link href="{{get_filemtime('/css/style.css')}}" rel="stylesheet">
+        <link href="{{get_filemtime('/css/front.css')}}" rel="stylesheet">
+		<script src="{{get_filemtime('/js/jquery.min.js')}}"></script>
+        <script src="{{get_filemtime('/js/bootstrap.min.js')}}"></script>
+		{% endblock %}
+	</head>
+	<body>
+        <nav class="navbar navbar-expand-md navbar-light bg-light">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mr-auto">
+                    {% if current_user.is_anonymous() %}
+                    <li class="nav-item">
+                        <a class="nav-link bold" href="/search?t=rating:safe">browse all users</a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/search?t=rating:safe">browse all users</a>
+                    </li>
+                    {% endif %}
+
+                </ul>
+                <ul class="navbar-nav">
+                    {% if not current_user.is_anonymous() %}
+                        <li class="nav-item bold">
+                            <a class="nav-link" href="/{{current_user.get_username()}}">{{current_user.get_username()}}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/{{current_user.get_username()}}/settings">account settings</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/{{current_user.get_username()}}/edit">edit profile</a>
+                        </li>
+                        <li class="nav-item log-out">
+                            <a class="nav-link" href="{{url_for('function_logout')}}">log out</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{url_for('account_login')}}">log in</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{url_for('account_register')}}">register</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </nav>
+        <div id="static-index">
+            <div id="logo"><a href="/">{{get_branding()}}</a></div>
+            
+            <form class="form-search"  id="searchform" action="/search" method="get">
+                <input id="search-bar" name="t" type="text" value="" placeholder="ex: age:25 programming python -java" />
+                <button class="btn btn-lg btn-primary btn-block" type="submit">search</button>
+            </form>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="alert alert-{{ messages.0.0 }}" role="alert">
+                {% for category, message in messages %}
+                    {{ message|safe }} </br>
+                {% endfor %}
+                </div>
+            {% endif %}
+            {% endwith %}
+
+            <span class="links">
+                <a href="/info/terms" target="_blank">terms of service</a> &bull; <a href="/info" target="_blank">info</a>
+            </span>
+        </div>
+	</body>
+</html>
